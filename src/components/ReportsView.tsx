@@ -126,8 +126,8 @@ export const ReportsView: React.FC = () => {
         </div>
       </div>
 
-      <div className="main-card overflow-hidden">
-        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="main-card overflow-hidden flex flex-col max-h-[calc(100vh-340px)]">
+        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4 sticky top-0 bg-white/80 backdrop-blur-md z-30">
           <div className="flex items-center gap-8">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
@@ -151,14 +151,22 @@ export const ReportsView: React.FC = () => {
             {isGenerating ? "Compiling..." : "Generate New Extract"}
           </button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
+          <table className="w-full text-left border-separate border-spacing-0">
+            <thead className="sticky top-0 z-20">
               <tr className="bg-slate-50/50 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
-                <th className="px-8 py-5">Identity Pointer</th>
-                <th className="px-8 py-5">Sync Timestamp</th>
-                <th className="px-8 py-5">Protocol</th>
-                <th className="px-8 py-5 text-right">Download</th>
+                <th className="px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10">
+                  Identity Pointer
+                </th>
+                <th className="px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10">
+                  Sync Timestamp
+                </th>
+                <th className="px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10">
+                  Protocol
+                </th>
+                <th className="px-8 py-5 border-b border-slate-100 bg-white sticky top-0 z-10 text-right">
+                  Download
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">

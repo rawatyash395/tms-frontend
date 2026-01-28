@@ -48,9 +48,9 @@ export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
   setViewMode,
 }) => {
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="main-card overflow-hidden">
-        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="h-full flex flex-col space-y-6 animate-fade-in">
+      <div className="main-card overflow-hidden flex flex-col flex-1 h-[calc(100vh-128px)]">
+        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4 sticky top-0 bg-white/80 backdrop-blur-md z-30">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
             <input
@@ -96,25 +96,25 @@ export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
           </div>
         </div>
 
-        {isLoading ? (
-          <div className="py-40 text-center">
-            <div className="w-12 h-12 border-4 border-[#14b8a6] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-slate-400 font-bold tracking-widest uppercase">
-              Syncing Node...
-            </p>
-          </div>
-        ) : error ? (
-          <div className="p-8 text-center">
-            <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-            <p className="text-slate-900 font-bold uppercase tracking-tighter">
-              Access Terminal Fault
-            </p>
-            <p className="text-slate-400 text-[10px] font-mono mt-1">
-              ERROR CODE: 0xDATA_NODE_UNREACHABLE
-            </p>
-          </div>
-        ) : (
-          <>
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
+          {isLoading ? (
+            <div className="py-40 text-center">
+              <div className="w-12 h-12 border-4 border-[#14b8a6] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+              <p className="text-slate-400 font-bold tracking-widest uppercase">
+                Syncing Node...
+              </p>
+            </div>
+          ) : error ? (
+            <div className="p-8 text-center">
+              <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+              <p className="text-slate-900 font-bold uppercase tracking-tighter">
+                Access Terminal Fault
+              </p>
+              <p className="text-slate-400 text-[10px] font-mono mt-1">
+                ERROR CODE: 0xDATA_NODE_UNREACHABLE
+              </p>
+            </div>
+          ) : (
             <div className="overflow-x-auto">
               {viewMode === "grid" ? (
                 <ShipmentGrid
@@ -136,39 +136,37 @@ export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
                 </div>
               )}
             </div>
+          )}
+        </div>
 
-            {/* Pagination */}
-            {shipments.length > 0 && (
-              <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 bg-white">
-                <p className="text-[10px] font-bold font-mono tracking-widest text-xs text-slate-500">
-                  Total {shipments.length} shipments
-                </p>
-                <div className="flex items-center gap-2">
-                  <p className="text-[10px] text-slate-400 font-bold font-mono tracking-widest">
-                    REGISTER PAGE {page} / {Math.max(1, totalPages)}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setPage((p) => Math.max(1, p - 1))}
-                      disabled={page === 1}
-                      className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() =>
-                        setPage((p) => Math.min(totalPages, p + 1))
-                      }
-                      disabled={page >= totalPages}
-                      className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
+        {/* Pagination */}
+        {!isLoading && !error && shipments.length > 0 && (
+          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 bg-white/80 backdrop-blur-md sticky bottom-0 z-30">
+            <p className="text-[10px] font-bold font-mono tracking-widest text-xs text-slate-500">
+              Total {shipments.length} shipments
+            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-[10px] text-slate-400 font-bold font-mono tracking-widest">
+                REGISTER PAGE {page} / {Math.max(1, totalPages)}
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page >= totalPages}
+                  className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
-            )}
-          </>
+            </div>
+          </div>
         )}
       </div>
     </div>
