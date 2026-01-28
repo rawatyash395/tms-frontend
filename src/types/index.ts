@@ -57,3 +57,11 @@ export interface SortConfig {
 }
 
 export type ViewMode = 'grid' | 'tile';
+
+export interface SystemStats {
+  totalShipments: number;
+  pendingShipments: number;
+  inTransitShipments: number;
+  deliveredShipments: number;
+  totalUsers: number;
+}
