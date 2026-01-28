@@ -53,26 +53,24 @@ export const CarrierView: React.FC<CarrierViewProps> = ({ onAdd, isAdmin }) => {
   return (
     <div className="animate-fade-in space-y-6">
       <div className="main-card overflow-hidden">
-        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-end gap-4">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-              <input
-                type="text"
-                placeholder="Query Registry..."
-                className="pl-11 pr-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold outline-none focus:ring-4 focus:ring-primary-500/5 transition-all text-slate-900 w-64 md:w-80 font-bold"
-              />
-            </div>
-            {isAdmin && (
-              <button
-                onClick={onAdd}
-                className="btn-primary py-3 px-6 text-[10px] tracking-widest uppercase font-bold"
-              >
-                <Plus className="w-4 h-4" />
-                Register Partner
-              </button>
-            )}
+        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+            <input
+              type="text"
+              placeholder="Query Registry..."
+              className="pl-11 pr-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold outline-none focus:ring-4 focus:ring-primary-500/5 transition-all text-slate-900 w-64 md:w-80 font-bold"
+            />
           </div>
+          {isAdmin && (
+            <button
+              onClick={onAdd}
+              className="btn-primary py-3 px-6 text-[10px] tracking-widest uppercase font-bold"
+            >
+              <Plus className="w-4 h-4" />
+              Register Partner
+            </button>
+          )}
         </div>
 
         <div className="p-6">

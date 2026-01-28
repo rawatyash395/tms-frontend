@@ -122,16 +122,8 @@ export const ReportsView: React.FC = () => {
       </div>
 
       <div className="main-card overflow-hidden">
-        <div className="p-6 border-b border-slate-50 flex items-center justify-between">
-          <div>
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-[0.2em]">
-              Generated Artifacts
-            </h3>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
-              Audit Trail Archive
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
+        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-8">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
               <input
@@ -140,19 +132,19 @@ export const ReportsView: React.FC = () => {
                 className="pl-11 pr-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold font-bold outline-none focus:ring-4 focus:ring-primary-500/5 transition-all text-slate-900 w-64 md:w-80"
               />
             </div>
-            <button
-              onClick={handleGenerate}
-              disabled={isGenerating}
-              className="btn-primary py-3 px-6 text-[10px] tracking-widest uppercase font-bold"
-            >
-              {isGenerating ? (
-                <RefreshCw className="w-4 h-4 animate-spin" />
-              ) : (
-                <FileText className="w-4 h-4" />
-              )}
-              {isGenerating ? "Compiling..." : "Generate New Extract"}
-            </button>
           </div>
+          <button
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            className="btn-primary py-3 px-6 text-[10px] tracking-widest uppercase font-bold"
+          >
+            {isGenerating ? (
+              <RefreshCw className="w-4 h-4 animate-spin" />
+            ) : (
+              <FileText className="w-4 h-4" />
+            )}
+            {isGenerating ? "Compiling..." : "Generate New Extract"}
+          </button>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
