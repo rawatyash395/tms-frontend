@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/graphql': {
-        target: 'https://backend-tms-8rk7.onrender.com',
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
       },
     },
