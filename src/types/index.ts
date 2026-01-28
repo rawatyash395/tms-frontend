@@ -27,8 +27,8 @@ export interface Shipment {
   currency: string;
   priority: 'low' | 'normal' | 'high' | 'urgent';
   notes?: string;
-  is_flagged: boolean;
-  flagged_reason?: string;
+  // is_flagged?: boolean;
+  // flagged_reason?: string;
   created_at: string;
   updated_at: string;
 }
