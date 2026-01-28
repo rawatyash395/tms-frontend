@@ -13,7 +13,6 @@ import { ShipmentGrid } from "./ShipmentGrid";
 import { ShipmentTileView } from "./ShipmentTileView";
 
 interface ShipmentManagementViewProps {
-  activeNavItem: string;
   shipments: Shipment[];
   viewMode: ViewMode;
   isLoading: boolean;
@@ -32,7 +31,6 @@ interface ShipmentManagementViewProps {
 }
 
 export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
-  activeNavItem,
   shipments,
   viewMode,
   isLoading,

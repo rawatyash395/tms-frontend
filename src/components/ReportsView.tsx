@@ -8,7 +8,6 @@ import {
   Clock,
   ArrowUpRight,
 } from "lucide-react";
-import { CustomSelect } from "./CustomSelect";
 
 export const ReportsView: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -38,8 +37,6 @@ export const ReportsView: React.FC = () => {
       }),
     );
   };
-
-  const [dimension, setDimension] = useState("Global Revenue by Region");
 
   const recentReports = [
     {

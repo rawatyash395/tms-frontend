@@ -224,7 +224,6 @@ export const DashboardPage: React.FC = () => {
       case "pending":
         return (
           <ShipmentManagementView
-            activeNavItem={activeNavItem}
             shipments={shipments}
             viewMode={viewMode}
             isLoading={isLoading}
