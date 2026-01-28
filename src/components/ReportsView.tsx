@@ -65,58 +65,63 @@ export const ReportsView: React.FC = () => {
   return (
     <div className="space-y-10 animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-6 bg-white border border-slate-200 rounded-[2.5rem] shadow-sm">
-          <p className="text-[10px] font-bold text-primary-600 uppercase tracking-[0.3em] mb-4">
-            Pipeline Health
-          </p>
-          <div className="flex items-end justify-between">
-            <div>
-              <h4 className="text-4xl font-bold text-slate-900 mb-2 tracking-tighter">
-                99.8%
-              </h4>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                Accuracy Threshold
-              </p>
-            </div>
-            <div className="p-4 bg-primary-50 rounded-[1.5rem] border border-primary-100">
-              <CheckCircle2 className="w-8 h-8 text-primary-600" />
-            </div>
+        <div className="main-card p-5 group flex items-start justify-between">
+          <div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+              Pipeline Health
+            </p>
+            <h3 className="text-3xl font-bold text-slate-900 tracking-tighter">
+              99.8%
+            </h3>
+            <p className="text-xs font-bold text-primary-600 mt-2 flex items-center gap-1 uppercase">
+              Accuracy{" "}
+              <span className="text-slate-400 font-medium lowercase">
+                threshold
+              </span>
+            </p>
+          </div>
+          <div className="p-3 bg-slate-100 rounded-xl text-slate-700 group-hover:bg-primary-50 group-hover:text-primary-600 transition-all">
+            <CheckCircle2 className="w-6 h-6" />
           </div>
         </div>
-        <div className="p-6 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">
-            Total Extracts
-          </p>
-          <div className="flex items-end justify-between">
-            <div>
-              <h4 className="text-4xl font-bold text-slate-900 mb-2 tracking-tighter">
-                1,240
-              </h4>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                Fiscal Cycle 2026
-              </p>
-            </div>
-            <div className="p-4 bg-blue-50 rounded-[1.5rem] border border-blue-100">
-              <ArrowUpRight className="w-8 h-8 text-blue-600" />
-            </div>
+
+        <div className="main-card p-5 group flex items-start justify-between">
+          <div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+              Total Extracts
+            </p>
+            <h3 className="text-3xl font-bold text-slate-900 tracking-tighter">
+              1,240
+            </h3>
+            <p className="text-xs font-bold text-blue-600 mt-2 flex items-center gap-1 uppercase">
+              Fiscal{" "}
+              <span className="text-slate-400 font-medium lowercase">
+                cycle 2026
+              </span>
+            </p>
+          </div>
+          <div className="p-3 bg-slate-100 rounded-xl text-slate-700 group-hover:bg-blue-50 group-hover:text-blue-600 transition-all">
+            <ArrowUpRight className="w-6 h-6" />
           </div>
         </div>
-        <div className="p-6 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">
-            Processing KPI
-          </p>
-          <div className="flex items-end justify-between">
-            <div>
-              <h4 className="text-4xl font-bold text-slate-900 mb-2 tracking-tighter">
-                1.2s
-              </h4>
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                Compute Duration
-              </p>
-            </div>
-            <div className="p-4 bg-orange-50 rounded-[1.5rem] border border-orange-100">
-              <Clock className="w-8 h-8 text-orange-600" />
-            </div>
+
+        <div className="main-card p-5 group flex items-start justify-between">
+          <div>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+              Processing KPI
+            </p>
+            <h3 className="text-3xl font-bold text-slate-900 tracking-tighter">
+              1.2s
+            </h3>
+            <p className="text-xs font-bold text-orange-600 mt-2 flex items-center gap-1 uppercase">
+              Compute{" "}
+              <span className="text-slate-400 font-medium lowercase">
+                duration
+              </span>
+            </p>
+          </div>
+          <div className="p-3 bg-slate-100 rounded-xl text-slate-700 group-hover:bg-orange-50 group-hover:text-orange-600 transition-all">
+            <Clock className="w-6 h-6" />
           </div>
         </div>
       </div>
