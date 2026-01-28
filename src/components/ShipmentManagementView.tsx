@@ -1,5 +1,13 @@
 import React from "react";
-import { ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  AlertCircle,
+  Search,
+  Plus,
+  Grid3x3,
+  LayoutGrid,
+} from "lucide-react";
 import { Shipment, ViewMode } from "../types";
 import { ShipmentGrid } from "./ShipmentGrid";
 import { ShipmentTileView } from "./ShipmentTileView";
@@ -17,6 +25,10 @@ interface ShipmentManagementViewProps {
   onEdit: (shipment: Shipment) => void;
   onDelete: (shipment: Shipment) => void;
   onShipmentClick: (shipment: Shipment) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  onNewShipment: () => void;
+  setViewMode: (mode: ViewMode) => void;
 }
 
 export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
@@ -32,20 +44,57 @@ export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
   onEdit,
   onDelete,
   onShipmentClick,
+  searchQuery,
+  setSearchQuery,
+  onNewShipment,
+  setViewMode,
 }) => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="main-card overflow-hidden">
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-white">
-          <div>
-            <h3 className="text-base font-bold text-slate-900">
-              {activeNavItem === "all-shipments"
-                ? "All Shipments"
-                : activeNavItem.replace("_", " ").toUpperCase()}
-            </h3>
-            <p className="text-xs text-slate-500">
-              Showing {shipments.length} shipments • Enterprise Registry
-            </p>
+        <div className="p-6 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-end gap-4">
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+              <input
+                type="text"
+                placeholder="Query Registry ID..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-11 pr-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold outline-none focus:ring-4 focus:ring-primary-500/5 transition-all text-slate-900 w-64 md:w-80 font-bold"
+              />
+            </div>
+            <div className="flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-2xl border border-slate-100">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`p-2 rounded-xl transition-all ${
+                  viewMode === "grid"
+                    ? "bg-white text-primary-600 shadow-sm ring-1 ring-slate-100"
+                    : "text-slate-400 hover:text-slate-600"
+                }`}
+              >
+                <Grid3x3 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode("tile")}
+                className={`p-2 rounded-xl transition-all ${
+                  viewMode === "tile"
+                    ? "bg-white text-primary-600 shadow-sm ring-1 ring-slate-100"
+                    : "text-slate-400 hover:text-slate-600"
+                }`}
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+            </div>
+            {isAdmin && (
+              <button
+                onClick={onNewShipment}
+                className="btn-primary py-3 px-6 text-[10px] tracking-widest uppercase font-bold"
+              >
+                <Plus className="w-4 h-4" />
+                Register Asset
+              </button>
+            )}
           </div>
         </div>
 
@@ -57,7 +106,7 @@ export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
             </p>
           </div>
         ) : error ? (
-          <div className="p-10 text-center">
+          <div className="p-8 text-center">
             <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
             <p className="text-slate-900 font-bold uppercase tracking-tighter">
               Access Terminal Fault
@@ -91,26 +140,33 @@ export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
             </div>
 
             {/* Pagination */}
-            {totalPages > 1 && (
+            {shipments.length > 0 && (
               <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 bg-white">
-                <p className="text-[10px] text-slate-400 font-bold font-mono tracking-widest">
-                  REGISTER PAGE {page} / {totalPages}
+                <p className="text-[10px] font-bold font-mono tracking-widest text-xs text-slate-500">
+                  Total {shipments.length} shipments
                 </p>
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setPage((p) => Math.max(1, p - 1))}
-                    disabled={page === 1}
-                    className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                    disabled={page === totalPages}
-                    className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <p className="text-[10px] text-slate-400 font-bold font-mono tracking-widest">
+                    REGISTER PAGE {page} / {Math.max(1, totalPages)}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      disabled={page === 1}
+                      className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() =>
+                        setPage((p) => Math.min(totalPages, p + 1))
+                      }
+                      disabled={page >= totalPages}
+                      className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 disabled:opacity-30 hover:bg-slate-100 transition-all shadow-sm"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

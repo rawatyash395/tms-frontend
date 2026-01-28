@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import {
   FileText,
   Download,
-  Filter,
   RefreshCw,
   Search,
   CheckCircle2,
   Clock,
   ArrowUpRight,
 } from "lucide-react";
+import { CustomSelect } from "./CustomSelect";
 
 export const ReportsView: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
-  const [showFilters, setShowFilters] = useState(false);
 
   const handleGenerate = () => {
     setIsGenerating(true);
@@ -28,6 +27,19 @@ export const ReportsView: React.FC = () => {
       );
     }, 2000);
   };
+
+  const handleDownload = (reportName: string) => {
+    window.dispatchEvent(
+      new CustomEvent("app:toast", {
+        detail: {
+          message: `PROTOCOL "${reportName}" DOWNLOAD INITIATED`,
+          type: "success",
+        },
+      }),
+    );
+  };
+
+  const [dimension, setDimension] = useState("Global Revenue by Region");
 
   const recentReports = [
     {
@@ -54,77 +66,10 @@ export const ReportsView: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-10 animate-fade-in pb-12">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 leading-none">
-            Reporting Terminal
-          </h2>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">
-            Intelligence Extraction Console
-          </p>
-        </div>
-        <div className="flex gap-4">
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-3 px-6 py-3 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all border ${
-              showFilters
-                ? "bg-slate-900 text-white border-slate-900 shadow-xl"
-                : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50"
-            }`}
-          >
-            <Filter className="w-4 h-4" />
-            {showFilters ? "Hide Parameters" : "Filter Streams"}
-          </button>
-          <button
-            onClick={handleGenerate}
-            disabled={isGenerating}
-            className="btn-primary py-3 px-6 text-xs tracking-widest uppercase font-bold"
-          >
-            {isGenerating ? (
-              <RefreshCw className="w-4 h-4 animate-spin" />
-            ) : (
-              <FileText className="w-4 h-4" />
-            )}
-            {isGenerating ? "Compiling Output..." : "Generate New Extract"}
-          </button>
-        </div>
-      </div>
-
-      {showFilters && (
-        <div className="main-card p-8 flex flex-wrap gap-10 animate-slide-down">
-          <div className="space-y-3">
-            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">
-              Data Dimension
-            </label>
-            <select className="bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold p-3 outline-none focus:ring-4 focus:ring-primary-500/5 focus:border-primary-500/30 transition-all min-w-[240px]">
-              <option>Global Revenue by Region</option>
-              <option>Carrier Efficiency Matrix</option>
-              <option>Operational Delay Registry</option>
-            </select>
-          </div>
-          <div className="space-y-3">
-            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">
-              Temporal Range
-            </label>
-            <div className="flex items-center gap-4">
-              <input
-                type="date"
-                className="bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold p-3 outline-none focus:ring-4 focus:ring-primary-500/5 transition-all"
-              />
-              <span className="text-slate-300 font-bold">TO</span>
-              <input
-                type="date"
-                className="bg-slate-50 border border-slate-100 rounded-xl text-sm font-bold p-3 outline-none focus:ring-4 focus:ring-primary-500/5 transition-all"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="p-8 bg-white border border-slate-200 rounded-[2.5rem] shadow-sm">
-          <p className="text-[10px] font-bold text-primary-600 uppercase tracking-[0.3em] mb-6">
+    <div className="space-y-10 animate-fade-in">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="p-6 bg-white border border-slate-200 rounded-[2.5rem] shadow-sm">
+          <p className="text-[10px] font-bold text-primary-600 uppercase tracking-[0.3em] mb-4">
             Pipeline Health
           </p>
           <div className="flex items-end justify-between">
@@ -141,7 +86,7 @@ export const ReportsView: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
+        <div className="p-6 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">
             Total Extracts
           </p>
@@ -159,7 +104,7 @@ export const ReportsView: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
+        <div className="p-6 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-6">
             Processing KPI
           </p>
@@ -180,7 +125,7 @@ export const ReportsView: React.FC = () => {
       </div>
 
       <div className="main-card overflow-hidden">
-        <div className="p-8 border-b border-slate-50 flex items-center justify-between">
+        <div className="p-6 border-b border-slate-50 flex items-center justify-between">
           <div>
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-[0.2em]">
               Generated Artifacts
@@ -189,13 +134,27 @@ export const ReportsView: React.FC = () => {
               Audit Trail Archive
             </p>
           </div>
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-            <input
-              type="text"
-              placeholder="Registry Query..."
-              className="pl-11 pr-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold outline-none focus:ring-4 focus:ring-primary-500/5 transition-all text-slate-900 w-64"
-            />
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+              <input
+                type="text"
+                placeholder="Registry Query..."
+                className="pl-11 pr-5 py-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs font-bold font-bold outline-none focus:ring-4 focus:ring-primary-500/5 transition-all text-slate-900 w-64 md:w-80"
+              />
+            </div>
+            <button
+              onClick={handleGenerate}
+              disabled={isGenerating}
+              className="btn-primary py-3 px-6 text-[10px] tracking-widest uppercase font-bold"
+            >
+              {isGenerating ? (
+                <RefreshCw className="w-4 h-4 animate-spin" />
+              ) : (
+                <FileText className="w-4 h-4" />
+              )}
+              {isGenerating ? "Compiling..." : "Generate New Extract"}
+            </button>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -231,7 +190,10 @@ export const ReportsView: React.FC = () => {
                     </span>
                   </td>
                   <td className="px-8 py-6 text-right">
-                    <button className="p-3 bg-white border border-slate-200 text-slate-400 rounded-2xl hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-all shadow-sm active:scale-95">
+                    <button
+                      onClick={() => handleDownload(report.name)}
+                      className="p-3 bg-white border border-slate-200 text-slate-400 rounded-2xl hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-all shadow-sm active:scale-95"
+                    >
                       <Download className="w-5 h-5" />
                     </button>
                   </td>

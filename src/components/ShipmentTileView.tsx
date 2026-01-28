@@ -43,7 +43,7 @@ const ShipmentTile: React.FC<{
 
   return (
     <div
-      className="main-card p-8 group hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer relative"
+      className="main-card p-6 group hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer relative"
       onClick={() => onShipmentClick(shipment)}
     >
       {/* Decorative Gradient Overlay - Moved inside a clipped container */}
@@ -56,69 +56,66 @@ const ShipmentTile: React.FC<{
           {shipment.status.replace("_", " ")}
         </div>
 
-        <div className="relative" ref={menuRef}>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsMenuOpen(!isMenuOpen);
-            }}
-            className={`p-2 rounded-xl transition-all ${isMenuOpen ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-900 hover:bg-slate-100"}`}
-          >
-            <MoreVertical className="w-5 h-5" />
-          </button>
+        {isAdmin && (
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMenuOpen(!isMenuOpen);
+              }}
+              className={`p-2 rounded-xl transition-all ${isMenuOpen ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-900 hover:bg-slate-100"}`}
+            >
+              <MoreVertical className="w-5 h-5" />
+            </button>
 
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                style={{ originX: 1, originY: 0 }}
-                className="absolute right-0 mt-3 w-56 bg-white border border-slate-200 rounded-[1.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] overflow-hidden"
-              >
-                <div className="p-2.5 space-y-1">
-                  {isAdmin && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsMenuOpen(false);
-                          // Delay slightly to allow menu close animation before parent state change
-                          onEdit?.(shipment);
-                        }}
-                        className="w-full flex items-center gap-3.5 px-4 py-3 text-[11px] font-bold text-blue-600 hover:bg-blue-50 rounded-xl transition-colors group/item"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover/item:bg-white transition-colors">
-                          <Edit2 className="w-4 h-4" />
-                        </div>
-                        <span className="flex-1 text-left uppercase tracking-wider">
-                          Modify Record
-                        </span>
-                        <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover/item:opacity-100 transition-all -translate-x-2 group-hover/item:translate-x-0" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsMenuOpen(false);
-                          setTimeout(() => onDelete?.(shipment), 50);
-                        }}
-                        className="w-full flex items-center gap-3.5 px-4 py-3 text-[11px] font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors group/item"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center group-hover/item:bg-white transition-colors">
-                          <Trash2 className="w-4 h-4" />
-                        </div>
-                        <span className="flex-1 text-left uppercase tracking-wider">
-                          Delete Asset
-                        </span>
-                        <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover/item:opacity-100 transition-all -translate-x-2 group-hover/item:translate-x-0" />
-                      </button>
-                    </>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+            <AnimatePresence>
+              {isMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                  style={{ originX: 1, originY: 0 }}
+                  className="absolute right-0 mt-3 w-56 bg-white border border-slate-200 rounded-[1.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-[100] overflow-hidden"
+                >
+                  <div className="p-2.5 space-y-1">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMenuOpen(false);
+                        onEdit?.(shipment);
+                      }}
+                      className="w-full flex items-center gap-3.5 px-4 py-3 text-[11px] font-bold text-blue-600 hover:bg-blue-50 rounded-xl transition-colors group/item"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover/item:bg-white transition-colors">
+                        <Edit2 className="w-4 h-4" />
+                      </div>
+                      <span className="flex-1 text-left uppercase tracking-wider">
+                        Modify Record
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover/item:opacity-100 transition-all -translate-x-2 group-hover/item:translate-x-0" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMenuOpen(false);
+                        setTimeout(() => onDelete?.(shipment), 50);
+                      }}
+                      className="w-full flex items-center gap-3.5 px-4 py-3 text-[11px] font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors group/item"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center group-hover/item:bg-white transition-colors">
+                        <Trash2 className="w-4 h-4" />
+                      </div>
+                      <span className="flex-1 text-left uppercase tracking-wider">
+                        Delete Asset
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover/item:opacity-100 transition-all -translate-x-2 group-hover/item:translate-x-0" />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
 
       <div className="space-y-6 relative z-10">
@@ -225,7 +222,7 @@ export const ShipmentTileView: React.FC<ShipmentTileViewProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
       {shipments.map((shipment) => (
         <ShipmentTile
           key={shipment.id}

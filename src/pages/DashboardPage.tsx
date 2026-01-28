@@ -72,6 +72,10 @@ export const DashboardPage: React.FC = () => {
   }, [activeNavItem, isAdmin]);
 
   useEffect(() => {
+    setPage(1);
+  }, [activeNavItem, filter, debouncedSearch]);
+
+  useEffect(() => {
     const handleToast = (e: any) => {
       setToast(e.detail);
     };
@@ -232,6 +236,13 @@ export const DashboardPage: React.FC = () => {
             onEdit={handleEdit}
             onDelete={handleDelete}
             onShipmentClick={setSelectedShipment}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onNewShipment={() => {
+              setEditingShipment(null);
+              setIsShipmentDrawerOpen(true);
+            }}
+            setViewMode={setViewMode}
           />
         );
       default:
@@ -250,23 +261,9 @@ export const DashboardPage: React.FC = () => {
       />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-        <Header
-          onItemClick={setActiveNavItem}
-          activeItem={activeNavItem}
-          onSetIsOpen={setIsSidebarOpen}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          isAdmin={isAdmin}
-          onNewShipment={() => {
-            setEditingShipment(null);
-            setIsShipmentDrawerOpen(true);
-          }}
-        />
-
-        <main className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
-          <StatsGrid stats={statsData} />
+        <Header activeItem={activeNavItem} onSetIsOpen={setIsSidebarOpen} />
+        <main className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 pt-0 mt-6">
+          {activeNavItem === "dashboard" && <StatsGrid stats={statsData} />}
 
           {renderContent()}
         </main>
