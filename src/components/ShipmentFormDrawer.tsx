@@ -183,7 +183,7 @@ export const ShipmentFormDrawer: React.FC<ShipmentFormDrawerProps> = ({
                   </h2>
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">
                     {shipment
-                      ? `Registry ID: ${shipment.id.substring(0, 8)}`
+                      ? `Registry ID: ${shipment.tracking_number || shipment.id}`
                       : "Enterprise Asset Registration"}
                   </p>
                 </div>
@@ -472,7 +472,7 @@ export const ShipmentFormDrawer: React.FC<ShipmentFormDrawerProps> = ({
                 className="btn-primary flex-[2] max-h-[42px] p-2"
               >
                 <Save className="w-5 h-5" />
-                {shipment ? "Synchronize Record" : "Register Shipment"}
+                {shipment ? "Update Shipment" : "Register Shipment"}
               </button>
             </div>
           </motion.div>

@@ -59,9 +59,7 @@ export const ShipmentDetailModal: React.FC<ShipmentDetailModalProps> = ({
                     Asset ID
                   </h2>
                   <p className="text-xl font-bold font-mono tracking-tighter text-slate-900">
-                    #
-                    {shipment.tracking_number ||
-                      shipment.id.substring(0, 8).toUpperCase()}
+                    #{shipment.tracking_number || shipment.id}
                   </p>
                 </div>
               </div>
@@ -89,7 +87,10 @@ export const ShipmentDetailModal: React.FC<ShipmentDetailModalProps> = ({
                     <Clock className="w-4 h-4 text-slate-300" />
                     <div className="text-[10px] font-bold uppercase tracking-widest">
                       Modified:{" "}
-                      {new Date(shipment.updated_at).toLocaleDateString()}
+                      {shipment.updated_at &&
+                      !isNaN(new Date(shipment.updated_at).getTime())
+                        ? new Date(shipment.updated_at).toLocaleDateString()
+                        : "NOT MODIFIED"}
                     </div>
                   </div>
                   <div className="flex items-center gap-4 text-slate-400">
@@ -193,7 +194,10 @@ export const ShipmentDetailModal: React.FC<ShipmentDetailModalProps> = ({
                   </span>
                 </div>
                 <p className="text-xs font-bold text-slate-900">
-                  {new Date(shipment.pickup_date).toLocaleDateString()}
+                  {shipment.pickup_date &&
+                  !isNaN(new Date(shipment.pickup_date).getTime())
+                    ? new Date(shipment.pickup_date).toLocaleDateString()
+                    : "NO SYNC DATE"}
                 </p>
               </div>
               <div className="bg-slate-50/50 p-5 rounded-3xl border border-slate-100">
