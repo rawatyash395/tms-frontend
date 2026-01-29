@@ -90,7 +90,7 @@ export const ShipmentManagementView: React.FC<ShipmentManagementViewProps> = ({
                 className="btn-primary py-3 px-6 text-[10px] tracking-widest uppercase font-bold"
               >
                 <Plus className="w-4 h-4" />
-                Register Asset
+                Register Shipment
               </button>
             )}
           </div>
