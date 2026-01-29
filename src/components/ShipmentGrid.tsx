@@ -24,9 +24,7 @@ const ShipmentRow: React.FC<{
     >
       <td className="px-8 py-6">
         <span className="text-sm font-bold text-slate-900 tracking-tight font-mono">
-          #
-          {shipment.tracking_number ||
-            shipment.id.substring(0, 8).toUpperCase()}
+          #{shipment.tracking_number || shipment.id}
         </span>
       </td>
       <td className="px-8 py-6">
