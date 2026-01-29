@@ -50,7 +50,7 @@ export const CustomSelect: React.FC<CustomSelectProps> = memo(
         <button
           type="button"
           onMouseDown={(e) => {
-            e.preventDefault(); // Prevent focus issues
+            e.preventDefault();
             setIsOpen(!isOpen);
           }}
           className="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 flex items-center justify-between text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all font-medium text-sm text-left shadow-sm hover:border-slate-400 group"

@@ -36,7 +36,7 @@ export const DashboardPage: React.FC = () => {
     null,
   );
   const [page, setPage] = useState(1);
-  const [limit] = useState(12);
+  const [limit] = useState(5);
   const [filter, setFilter] = useState<ShipmentFilter>({});
   const [sort] = useState<SortConfig>({ field: "created_at", order: "DESC" });
   const [searchQuery, setSearchQuery] = useState("");
